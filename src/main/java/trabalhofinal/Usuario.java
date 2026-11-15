@@ -1,3 +1,5 @@
+package trabalhofinal;
+
 /**
  * Classe base para os usuarios do sistema esportivo universitario.
  * Os dados podem ser recebidos futuramente por Scanner na classe Main
