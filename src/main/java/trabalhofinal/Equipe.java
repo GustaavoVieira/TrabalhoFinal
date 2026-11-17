@@ -17,6 +17,12 @@ public class Equipe {
     }
 
     public void adicionarAtleta(Atleta atleta) {
+
+        for  (int i = 0; i < this.atletas.length; i++) {
+            if(this.atletas[i].getMatricula() == atletas[i].getMatricula()) {
+                System.out.println("Atleta já adicionado");
+            }
+        }
         if (qtdAtletas < atletas.length) {
             atletas[qtdAtletas] = atleta;
             qtdAtletas++;
@@ -36,4 +42,27 @@ public class Equipe {
         }
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getModalidade() {
+        return modalidade;
+    }
+
+    public void setModalidade(String modalidade) {
+        this.modalidade = modalidade;
+    }
+
+    public Tecnico getTecnico() {
+        return tecnico;
+    }
+
+    public void setTecnico(Tecnico tecnico) {
+        this.tecnico = tecnico;
+    }
 }
