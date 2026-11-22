@@ -1,4 +1,7 @@
+
 package trabalhofinal;
+
+import javax.swing.JOptionPane;
 
 public class Equipe {
 
@@ -16,30 +19,80 @@ public class Equipe {
         this.qtdAtletas = 0;
     }
 
-    public void adicionarAtleta(Atleta atleta) {
+    public boolean adicionarAtleta(Atleta atleta) {
 
-        for  (int i = 0; i < this.atletas.length; i++) {
-            if(this.atletas[i].getMatricula() == atletas[i].getMatricula()) {
-                System.out.println("Atleta já adicionado");
+        if (atleta == null) {
+            JOptionPane.showMessageDialog(null,
+                    "Atleta inválido!");
+            return false;
+        }
+
+        for (int i = 0; i < qtdAtletas; i++) {
+
+            if (atletas[i].getMatricula().equals(atleta.getMatricula())) {
+                JOptionPane.showMessageDialog(null,
+                        "Atleta já adicionado!");
+                return false;
             }
         }
+
         if (qtdAtletas < atletas.length) {
+
             atletas[qtdAtletas] = atleta;
             qtdAtletas++;
 
-            System.out.println("Atleta adicionado com sucesso!");
+            JOptionPane.showMessageDialog(null,
+                    "Atleta adicionado com sucesso!");
+            return true;
+
         } else {
-            System.out.println("Equipe cheia!");
+            JOptionPane.showMessageDialog(null,
+                    "Equipe cheia!");
+            return false;
         }
+
+    }
+
+    public void removerAtleta(String matricula) {
+
+        for (int i = 0; i < qtdAtletas; i++) {
+
+            if (atletas[i].getMatricula().equals(matricula)) {
+
+                for (int j = i; j < qtdAtletas - 1; j++) {
+                    atletas[j] = atletas[j + 1];
+                }
+
+                atletas[qtdAtletas - 1] = null;
+                qtdAtletas--;
+
+                JOptionPane.showMessageDialog(null,
+                        "Atleta removido da equipe com sucesso!");
+
+                return;
+            }
+        }
+
+        JOptionPane.showMessageDialog(null,
+                "Atleta não encontrado nesta equipe!");
     }
 
     public void listarAtletas() {
 
-        System.out.println("Equipe: " + nome);
+        String lista = "Equipe: " + nome
+                + "\nModalidade: " + modalidade
+                + "\n\nAtletas cadastrados:\n";
 
-        for (int i = 0; i < qtdAtletas; i++) {
-            System.out.println(atletas[i].getNome());
+        if (qtdAtletas == 0) {
+            lista += "Nenhum atleta cadastrado.";
+        } else {
+
+            for (int i = 0; i < qtdAtletas; i++) {
+                lista += "\n" + atletas[i].getNome();
+            }
         }
+
+        JOptionPane.showMessageDialog(null, lista);
     }
 
     public String getNome() {

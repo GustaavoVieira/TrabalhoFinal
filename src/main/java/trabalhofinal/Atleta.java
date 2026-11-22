@@ -19,7 +19,8 @@ public class Atleta extends Usuario {
     }
 
 
-    public void solicitarEquipe(Equipe[] equipes, int qtdEquipes) {
+
+    public void solicitarEquipe(Equipe []equipes, int qtdEquipes) {
 
         if (qtdEquipes == 0) {
             JOptionPane.showMessageDialog(null,
@@ -94,7 +95,45 @@ public class Atleta extends Usuario {
 
     @Override
     public void exibirMenu() {
-        // Switch será implementado posteriormente.
+
+        int opcao;
+
+        do {
+
+            String[] opcoes = {
+                    "1 - Consultar meus dados",
+                    "2 - Solicitar entrada em uma equipe",
+                    "3 - Sair"
+            };
+
+            opcao = JOptionPane.showOptionDialog(
+                    null,
+                    "Bem-vindo, Atleta!\nEscolha uma opção:",
+                    "Menu do Atleta",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    opcoes,
+                    opcoes[0]
+            );
+
+            switch (opcao) {
+
+                case 0:
+                    exibirDados();
+                    break;
+
+                case 1:
+                    solicitarEquipe(Main.getEquipes(), Main.getQtdEquipes());
+                    break;
+                case 2:
+                case -1:
+                    JOptionPane.showMessageDialog(null,
+                            "Saindo do menu do atleta...");
+                    break;
+            }
+
+        } while (opcao != 2 && opcao != -1);
     }
 
     public String getMatricula() {

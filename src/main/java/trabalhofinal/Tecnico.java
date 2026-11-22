@@ -7,39 +7,107 @@ public class Tecnico extends Usuario {
 
     private SolicitacaoEquipe[] solicitacoes;
     private int qtdSolicitacoes;
+    private Equipe[] equipes;
+    private int qtdEquipes;
 
     public Tecnico(String nome, String email, String senha) {
         super(nome, email, senha);
 
         this.solicitacoes = new SolicitacaoEquipe[100];
         this.qtdSolicitacoes = 0;
+
+        this.equipes = new Equipe[50];
+        this.qtdEquipes = 0;
     }
 
-    public void criarEquipe(Equipe equipe) {
 
-        String nome = JOptionPane.showInputDialog(
-                "Digite o nome da equipe:");
+    public void criarEquipe() {
+
+        if (qtdEquipes >= equipes.length) {
+            JOptionPane.showMessageDialog(null, "Limite de equipes atingido!");
+            return;
+        }
+
+        String nome = JOptionPane.showInputDialog("Digite o nome da equipe:");
 
         if (nome == null || nome.trim().isEmpty()) {
             return;
         }
 
-        String modalidade = JOptionPane.showInputDialog(
-                "Digite a modalidade da equipe:");
+        String modalidade = JOptionPane.showInputDialog("Digite a modalidade da equipe:");
 
         if (modalidade == null || modalidade.trim().isEmpty()) {
             return;
         }
 
-        equipe.setNome(nome);
-        equipe.setModalidade(modalidade);
-        equipe.setTecnico(this);
+        Equipe equipe = new Equipe(nome, modalidade, this);
 
-        JOptionPane.showMessageDialog(null,
-                "Equipe criada com sucesso!");
+        equipes[qtdEquipes] = equipe;
+        qtdEquipes++;
+
+        Main.adicionarEquipe(equipe);
+
+        JOptionPane.showMessageDialog(null, "Equipe criada com sucesso!");
+    }
+
+    public void consultarEquipes() {
+
+        if (qtdEquipes == 0) {
+            JOptionPane.showMessageDialog(null, "Nenhuma equipe cadastrada!");
+            return;
+        }
+
+        String lista = "EQUIPES CADASTRADAS:\n\n";
+
+        for (int i = 0; i < qtdEquipes; i++) {
+            lista += "Nome: " + equipes[i].getNome()
+                    + "\nModalidade: " + equipes[i].getModalidade()
+                    + "\n\n";
+        }
+
+        JOptionPane.showMessageDialog(null, lista);
+    }
+
+    public Equipe selecionarEquipe() {
+
+        if (qtdEquipes == 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Nenhuma equipe cadastrada!");
+            return null;
+        }
+
+        String[] opcoes = new String[qtdEquipes];
+
+        for (int i = 0; i < qtdEquipes; i++) {
+            opcoes[i] = equipes[i].getNome()
+                    + " - " + equipes[i].getModalidade();
+        }
+
+        String escolha = (String) JOptionPane.showInputDialog(
+                null,
+                "Selecione uma equipe:",
+                "Equipes cadastradas",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcoes,
+                opcoes[0]
+        );
+
+        if (escolha == null) {
+            return null;
+        }
+
+        for (int i = 0; i < qtdEquipes; i++) {
+            if (opcoes[i].equals(escolha)) {
+                return equipes[i];
+            }
+        }
+
+        return null;
     }
 
     public void receberSolicitacao(SolicitacaoEquipe solicitacao) {
+
 
         if (solicitacao == null) {
             return;
@@ -103,9 +171,9 @@ public class Tecnico extends Usuario {
 
                 if (resposta == JOptionPane.YES_OPTION) {
 
-                    equipe.adicionarAtleta(atleta);
-
-                    solicitacao.setSituacao("ACEITA");
+                    if (equipe.adicionarAtleta(atleta)) {
+                        solicitacao.setSituacao("ACEITA");
+                    }
 
                 } else if (resposta == JOptionPane.NO_OPTION) {
 
@@ -121,14 +189,106 @@ public class Tecnico extends Usuario {
             }
         }
 
+
         if (!encontrou) {
             JOptionPane.showMessageDialog(null,
                     "Não existem solicitações pendentes.");
         }
     }
 
+    public void consultarIntegrantes() {
+
+        Equipe equipe = selecionarEquipe();
+
+        if (equipe != null) {
+            equipe.listarAtletas();
+        }
+    }
+
+    public void removerAtletaEquipe() {
+
+        Equipe equipe = selecionarEquipe();
+
+        if (equipe == null) {
+            return;
+        }
+
+        String matricula = JOptionPane.showInputDialog(
+                "Digite a matrícula do atleta que deseja remover:");
+
+        if (matricula == null || matricula.trim().isEmpty()) {
+            return;
+        }
+
+        equipe.removerAtleta(matricula);
+    }
+
+
     @Override
     public void exibirMenu() {
-        // Switch será implementado posteriormente.
+
+        int opcao;
+
+        do {
+
+            String[] opcoes = {
+                    "1 - Criar equipe",
+                    "2 - Consultar equipes",
+                    "3 - Gerenciar solicitações",
+                    "4 = Consultar integrantes",
+                    "5 - Remover atleta",
+                    "6 - Sair"
+            };
+
+            opcao = JOptionPane.showOptionDialog(
+                    null,
+                    "Bem-vindo, Técnico!\nEscolha uma opção:",
+                    "Menu do Técnico",
+                    JOptionPane.DEFAULT_OPTION,
+                    JOptionPane.INFORMATION_MESSAGE,
+                    null,
+                    opcoes,
+                    opcoes[0]
+            );
+
+            switch (opcao) {
+
+                case 0:
+                    criarEquipe();
+                    break;
+
+                case 1:
+                    consultarEquipes();
+                    break;
+
+                case 2:
+                    gerenciarEquipe();
+                    break;
+
+                case 3:
+                    consultarIntegrantes();
+                    break;
+
+                case 4:
+                    removerAtletaEquipe();
+                    break;
+
+                case 5:
+                case -1:
+                    JOptionPane.showMessageDialog(null,
+                            "Saindo do menu do técnico...");
+                    break;
+            }
+
+        } while (opcao != 5 && opcao != -1);
     }
+
+    public Equipe[] getEquipes() {
+        return equipes;
+    }
+
+    public int getQtdEquipes() {
+        return qtdEquipes;
+    }
+
 }

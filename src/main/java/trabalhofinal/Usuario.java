@@ -1,5 +1,7 @@
 package trabalhofinal;
 
+import javax.swing.*;
+
 /**
  * Classe base para os usuarios do sistema esportivo universitario.
  * Os dados podem ser recebidos futuramente por Scanner na classe Main
@@ -51,8 +53,9 @@ public abstract class Usuario {
     }
 
     public void exibirDados() {
-        System.out.println("Nome: " + nome);
-        System.out.println("E-mail: " + email);
+        JOptionPane.showMessageDialog(null,
+                "Nome: " + nome
+                        + "\nE-mail: " + email);
     }
 
     // Cada tipo de usuario tera seu proprio menu.
