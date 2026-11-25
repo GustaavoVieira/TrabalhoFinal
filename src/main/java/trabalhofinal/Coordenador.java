@@ -16,10 +16,14 @@ public class Coordenador extends Usuario{
         do {
 
             String[] opcoes = {
-                    "1 - Cadastrar usuários",
-                    "2 - Consultar usuários",
-                    "3 - Consultar equipes",
-                    "4 - Sair"
+                    "Cadastrar usuários",
+                    "Consultar usuários",
+                    "Consultar equipes",
+                    "Cadastrar campeonato",
+                    "Adicionar equipe ao campeonato",
+                    "Cadastrar jogo",
+                    "Consultar campeonatos",
+                    "Sair"
             };
 
             opcao = JOptionPane.showOptionDialog(
@@ -34,6 +38,7 @@ public class Coordenador extends Usuario{
             );
 
             switch (opcao) {
+
                 case 0:
                     Main.cadastrarUsuario();
                     break;
@@ -47,11 +52,28 @@ public class Coordenador extends Usuario{
                     break;
 
                 case 3:
+                    Main.cadastrarCampeonato();
+                    break;
+
+                case 4:
+                    Main.adicionarEquipeCampeonato();
+                    break;
+
+                case 5:
+                    Main.cadastrarJogo();
+                    break;
+
+                case 6:
+                    Main.consultarCampeonatos();
+                    break;
+
+                case 7:
                 case -1:
                     JOptionPane.showMessageDialog(null,
                             "Saindo do menu do coordenador...");
                     break;
             }
-        } while (opcao != 3 && opcao != -1);
+
+        } while (opcao != 7 && opcao != -1);
     }
 }

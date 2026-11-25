@@ -6,9 +6,12 @@ public class Main {
 
     private static Usuario[] usuarios = new Usuario[100];
     private static Equipe[] equipes = new Equipe[100];
+    private static Campeonato[] campeonatos = new Campeonato[100];
 
     private static int qtdUsuarios = 0;
     private static int qtdEquipes = 0;
+    private static int qtdCampeonatos = 0;
+
 
     public static void main(String[] args) {
         menuPrincipal();
@@ -169,6 +172,33 @@ public class Main {
                 "Usuário cadastrado com sucesso!");
     }
 
+    public static void cadastrarCampeonato() {
+
+        if (qtdCampeonatos >= campeonatos.length) {
+            JOptionPane.showMessageDialog(null,
+                    "Limite de campeonatos atingido!");
+            return;
+        }
+
+        String nome = JOptionPane.showInputDialog(
+                "Digite o nome do campeonato:");
+
+        if (nome == null || nome.trim().isEmpty()) return;
+
+        String modalidade = JOptionPane.showInputDialog(
+                "Digite a modalidade do campeonato:");
+
+        if (modalidade == null || modalidade.trim().isEmpty()) return;
+
+        Campeonato campeonato = new Campeonato(nome, modalidade);
+
+        campeonatos[qtdCampeonatos] = campeonato;
+        qtdCampeonatos++;
+
+        JOptionPane.showMessageDialog(null,
+                "Campeonato cadastrado com sucesso!");
+    }
+
     public static void adicionarUsuario(Usuario usuario) {
         if (qtdUsuarios < usuarios.length) {
             usuarios[qtdUsuarios] = usuario;
@@ -182,6 +212,81 @@ public class Main {
             equipes[qtdEquipes] = equipe;
             qtdEquipes++;
         }
+    }
+
+    public static Equipe selecionarEquipeJogo(
+            Campeonato campeonato, String mensagem) {
+
+        if (campeonato.getQtdEquipes() == 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Este campeonato não possui equipes!");
+            return null;
+        }
+
+        String[] opcoes = new String[campeonato.getQtdEquipes()];
+
+        for (int i = 0; i < campeonato.getQtdEquipes(); i++) {
+            Equipe equipe = campeonato.getEquipe(i);
+
+            opcoes[i] = equipe.getNome()
+                    + " - " + equipe.getModalidade();
+        }
+
+        String escolha = (String) JOptionPane.showInputDialog(
+                null,
+                mensagem,
+                "Selecionar equipe",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcoes,
+                opcoes[0]
+        );
+
+        if (escolha == null) return null;
+
+        for (int i = 0; i < campeonato.getQtdEquipes(); i++) {
+            if (opcoes[i].equals(escolha)) {
+                return campeonato.getEquipe(i);
+            }
+        }
+
+        return null;
+    }
+
+    public static void cadastrarJogo() {
+
+        Campeonato campeonato = selecionarCampeonato();
+
+        if (campeonato == null) return;
+
+        Equipe equipe1 = selecionarEquipeJogo(
+                campeonato, "Selecione a primeira equipe:");
+
+        if (equipe1 == null) return;
+
+        Equipe equipe2 = selecionarEquipeJogo(
+                campeonato, "Selecione a segunda equipe:");
+
+        if (equipe2 == null) return;
+
+        String data = JOptionPane.showInputDialog(
+                "Digite a data do jogo:");
+
+        if (data == null || data.trim().isEmpty()) return;
+
+        String horario = JOptionPane.showInputDialog(
+                "Digite o horário do jogo:");
+
+        if (horario == null || horario.trim().isEmpty()) return;
+
+        String local = JOptionPane.showInputDialog(
+                "Digite o local do jogo:");
+
+        if (local == null || local.trim().isEmpty()) return;
+
+        Jogo jogo = new Jogo(equipe1, equipe2, data, horario, local);
+
+        campeonato.adicionarJogo(jogo);
     }
 
     public static void consultarUsuarios() {
@@ -233,6 +338,95 @@ public class Main {
         }
 
         JOptionPane.showMessageDialog(null, lista);
+    }
+
+    public static void consultarCampeonatos() {
+
+        if (qtdCampeonatos == 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Nenhum campeonato cadastrado!");
+            return;
+        }
+
+        for (int i = 0; i < qtdCampeonatos; i++) {
+            campeonatos[i].listarEquipes();
+            campeonatos[i].listarJogos();
+        }
+    }
+
+    public static Campeonato selecionarCampeonato() {
+
+        if (qtdCampeonatos == 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Nenhum campeonato cadastrado!");
+            return null;
+        }
+
+        String[] opcoes = new String[qtdCampeonatos];
+
+        for (int i = 0; i < qtdCampeonatos; i++) {
+            opcoes[i] = campeonatos[i].getNome()
+                    + " - " + campeonatos[i].getModalidade();
+        }
+
+        String escolha = (String) JOptionPane.showInputDialog(
+                null,
+                "Selecione um campeonato:",
+                "Campeonatos cadastrados",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcoes,
+                opcoes[0]
+        );
+
+        if (escolha == null) return null;
+
+        for (int i = 0; i < qtdCampeonatos; i++) {
+            if (opcoes[i].equals(escolha)) {
+                return campeonatos[i];
+            }
+        }
+
+        return null;
+    }
+
+    public static void adicionarEquipeCampeonato() {
+
+        Campeonato campeonato = selecionarCampeonato();
+
+        if (campeonato == null) return;
+
+        if (qtdEquipes == 0) {
+            JOptionPane.showMessageDialog(null,
+                    "Nenhuma equipe cadastrada no sistema!");
+            return;
+        }
+
+        String[] opcoes = new String[qtdEquipes];
+
+        for (int i = 0; i < qtdEquipes; i++) {
+            opcoes[i] = equipes[i].getNome()
+                    + " - " + equipes[i].getModalidade();
+        }
+
+        String escolha = (String) JOptionPane.showInputDialog(
+                null,
+                "Selecione uma equipe:",
+                "Adicionar equipe",
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                opcoes,
+                opcoes[0]
+        );
+
+        if (escolha == null) return;
+
+        for (int i = 0; i < qtdEquipes; i++) {
+            if (opcoes[i].equals(escolha)) {
+                campeonato.adicionarEquipe(equipes[i]);
+                return;
+            }
+        }
     }
 
     public static Equipe[] getEquipes() {
