@@ -13,7 +13,7 @@ public class Atleta extends Usuario {
                   String matricula, String curso, String modalidade) {
 
         super(nome, email, senha);
-        this.matricula = matricula;
+        setMatricula(matricula);
         this.curso = curso;
         this.modalidade = modalidade;
     }
@@ -134,6 +134,16 @@ public class Atleta extends Usuario {
             }
 
         } while (opcao != 2 && opcao != -1);
+    }
+
+    public void setMatricula(String matricula) {
+
+        if (matricula == null || matricula.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "A matrícula não pode ficar vazia!");
+        }
+
+        this.matricula = matricula.trim();
     }
 
     public String getMatricula() {

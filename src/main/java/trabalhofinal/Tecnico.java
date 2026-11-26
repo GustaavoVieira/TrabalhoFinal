@@ -21,34 +21,47 @@ public class Tecnico extends Usuario {
     }
 
 
+
+
     public void criarEquipe() {
 
         if (qtdEquipes >= equipes.length) {
-            JOptionPane.showMessageDialog(null, "Limite de equipes atingido!");
+            JOptionPane.showMessageDialog(null,
+                    "Limite de equipes atingido!");
             return;
         }
 
-        String nome = JOptionPane.showInputDialog("Digite o nome da equipe:");
+        String nome = JOptionPane.showInputDialog(
+                "Digite o nome da equipe:");
 
         if (nome == null || nome.trim().isEmpty()) {
             return;
         }
 
-        String modalidade = JOptionPane.showInputDialog("Digite a modalidade da equipe:");
+        String modalidade = JOptionPane.showInputDialog(
+                "Digite a modalidade da equipe:");
 
         if (modalidade == null || modalidade.trim().isEmpty()) {
             return;
         }
 
+        if (Main.equipeJaCadastrada(nome, modalidade)) {
+            JOptionPane.showMessageDialog(null,
+                    "Já existe uma equipe com esse nome e modalidade!");
+            return;
+        }
+
         Equipe equipe = new Equipe(nome, modalidade, this);
 
-        equipes[qtdEquipes] = equipe;
-        qtdEquipes++;
+        if (Main.adicionarEquipe(equipe)) {
+            equipes[qtdEquipes] = equipe;
+            qtdEquipes++;
 
-        Main.adicionarEquipe(equipe);
-
-        JOptionPane.showMessageDialog(null, "Equipe criada com sucesso!");
+            JOptionPane.showMessageDialog(null,
+                    "Equipe criada com sucesso!");
+        }
     }
+
 
     public void consultarEquipes() {
 
@@ -106,25 +119,37 @@ public class Tecnico extends Usuario {
         return null;
     }
 
+
     public void receberSolicitacao(SolicitacaoEquipe solicitacao) {
 
+        if (solicitacao == null
+                || solicitacao.getAtleta() == null
+                || solicitacao.getEquipe() == null) {
 
-        if (solicitacao == null) {
+            JOptionPane.showMessageDialog(null,
+                    "Solicitação inválida!");
+            return;
+        }
+
+        if (solicitacao.getEquipe().getTecnico() != this) {
+            JOptionPane.showMessageDialog(null,
+                    "Esta equipe não pertence a este técnico!");
             return;
         }
 
         for (int i = 0; i < qtdSolicitacoes; i++) {
 
             if (solicitacoes[i].getAtleta().getMatricula()
-                    .equals(solicitacao.getAtleta().getMatricula())
+                    .equalsIgnoreCase(
+                            solicitacao.getAtleta().getMatricula())
                     && solicitacoes[i].getEquipe()
                     == solicitacao.getEquipe()
-                    && solicitacoes[i].getSituacao()
-                    .equals("PENDENTE")) {
+                    && (solicitacoes[i].getSituacao().equals("PENDENTE")
+                    || solicitacoes[i].getSituacao().equals("ACEITA"))) {
 
                 JOptionPane.showMessageDialog(null,
-                        "Você já possui uma solicitação pendente!");
-
+                        "Este atleta já possui uma solicitação pendente "
+                                + "ou já foi aceito nesta equipe!");
                 return;
             }
         }
@@ -139,10 +164,13 @@ public class Tecnico extends Usuario {
                             + "Aguarde a análise do técnico.");
 
         } else {
+
             JOptionPane.showMessageDialog(null,
                     "Limite de solicitações atingido!");
         }
     }
+
+
 
     public void gerenciarEquipe() {
 
@@ -152,7 +180,8 @@ public class Tecnico extends Usuario {
 
             SolicitacaoEquipe solicitacao = solicitacoes[i];
 
-            if (solicitacao.getSituacao().equals("PENDENTE")) {
+            if (solicitacao.getSituacao().equals("PENDENTE")
+                    && solicitacao.getEquipe().getTecnico() == this) {
 
                 encontrou = true;
 
@@ -181,18 +210,13 @@ public class Tecnico extends Usuario {
 
                     JOptionPane.showMessageDialog(null,
                             "Solicitação recusada!");
-
-                } else {
-                    // O técnico fechou a janela.
-                    // A solicitação continua pendente.
                 }
             }
         }
 
-
         if (!encontrou) {
             JOptionPane.showMessageDialog(null,
-                    "Não existem solicitações pendentes.");
+                    "Não existem solicitações pendentes!");
         }
     }
 
@@ -232,12 +256,12 @@ public class Tecnico extends Usuario {
         do {
 
             String[] opcoes = {
-                    "1 - Criar equipe",
-                    "2 - Consultar equipes",
-                    "3 - Gerenciar solicitações",
-                    "4 = Consultar integrantes",
-                    "5 - Remover atleta",
-                    "6 - Sair"
+                    "Criar equipe",
+                    "Consultar equipes",
+                    "Gerenciar solicitações",
+                    "Consultar integrantes",
+                    "Remover atleta",
+                    "Sair"
             };
 
             opcao = JOptionPane.showOptionDialog(

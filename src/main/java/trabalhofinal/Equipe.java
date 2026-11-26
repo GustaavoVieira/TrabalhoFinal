@@ -12,9 +12,9 @@ public class Equipe {
     private int qtdAtletas;
 
     public Equipe(String nome, String modalidade, Tecnico tecnico) {
-        this.nome = nome;
-        this.modalidade = modalidade;
-        this.tecnico = tecnico;
+        setNome(nome);
+        setModalidade(modalidade);
+        setTecnico(tecnico);
         this.atletas = new Atleta[50];
         this.qtdAtletas = 0;
     }
@@ -29,35 +29,42 @@ public class Equipe {
 
         for (int i = 0; i < qtdAtletas; i++) {
 
-            if (atletas[i].getMatricula().equals(atleta.getMatricula())) {
+            if (atletas[i].getMatricula().equalsIgnoreCase(
+                    atleta.getMatricula())) {
+
                 JOptionPane.showMessageDialog(null,
                         "Atleta já adicionado!");
                 return false;
             }
         }
 
-        if (qtdAtletas < atletas.length) {
-
-            atletas[qtdAtletas] = atleta;
-            qtdAtletas++;
-
-            JOptionPane.showMessageDialog(null,
-                    "Atleta adicionado com sucesso!");
-            return true;
-
-        } else {
+        if (qtdAtletas >= atletas.length) {
             JOptionPane.showMessageDialog(null,
                     "Equipe cheia!");
             return false;
         }
 
+        atletas[qtdAtletas] = atleta;
+        qtdAtletas++;
+
+        JOptionPane.showMessageDialog(null,
+                "Atleta adicionado com sucesso!");
+
+        return true;
     }
 
     public void removerAtleta(String matricula) {
 
+        if (matricula == null || matricula.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(null,
+                    "Matrícula inválida!");
+            return;
+        }
+
         for (int i = 0; i < qtdAtletas; i++) {
 
-            if (atletas[i].getMatricula().equals(matricula)) {
+            if (atletas[i].getMatricula().equalsIgnoreCase(
+                    matricula.trim())) {
 
                 for (int j = i; j < qtdAtletas - 1; j++) {
                     atletas[j] = atletas[j + 1];
@@ -81,6 +88,7 @@ public class Equipe {
 
         String lista = "Equipe: " + nome
                 + "\nModalidade: " + modalidade
+                + "\nTécnico: " + tecnico.getNome()
                 + "\n\nAtletas cadastrados:\n";
 
         if (qtdAtletas == 0) {
@@ -100,7 +108,13 @@ public class Equipe {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+
+        if (nome == null || nome.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "O nome da equipe não pode ficar vazio!");
+        }
+
+        this.nome = nome.trim();
     }
 
     public String getModalidade() {
@@ -108,7 +122,13 @@ public class Equipe {
     }
 
     public void setModalidade(String modalidade) {
-        this.modalidade = modalidade;
+
+        if (modalidade == null || modalidade.trim().isEmpty()) {
+            throw new IllegalArgumentException(
+                    "A modalidade não pode ficar vazia!");
+        }
+
+        this.modalidade = modalidade.trim();
     }
 
     public Tecnico getTecnico() {
@@ -116,6 +136,16 @@ public class Equipe {
     }
 
     public void setTecnico(Tecnico tecnico) {
+
+        if (tecnico == null) {
+            throw new IllegalArgumentException(
+                    "A equipe precisa possuir um técnico!");
+        }
+
         this.tecnico = tecnico;
+    }
+
+    public int getQtdAtletas() {
+        return qtdAtletas;
     }
 }
