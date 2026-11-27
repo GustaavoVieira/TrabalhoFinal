@@ -1,4 +1,4 @@
-﻿package trabalhofinal.exception;
+package trabalhofinal.exception;
 
 /**
  * Lançada quando se tenta adicionar equipes ou jogos a um campeonato

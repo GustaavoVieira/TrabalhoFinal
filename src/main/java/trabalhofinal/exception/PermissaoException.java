@@ -1,4 +1,4 @@
-﻿package trabalhofinal.exception;
+package trabalhofinal.exception;
 
 /**
  * Exceção lançada quando uma operação viola regras de permissão no sistema.

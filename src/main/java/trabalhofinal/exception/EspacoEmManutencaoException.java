@@ -1,4 +1,4 @@
-﻿package trabalhofinal.exception;
+package trabalhofinal.exception;
 
 /**
  * Lançada quando se tenta reservar um espaço esportivo que está
