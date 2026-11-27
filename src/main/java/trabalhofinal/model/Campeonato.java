@@ -1,4 +1,4 @@
-﻿package trabalhofinal.model;
+package trabalhofinal.model;
 
 import trabalhofinal.exception.*;
 import trabalhofinal.interfaces.*;

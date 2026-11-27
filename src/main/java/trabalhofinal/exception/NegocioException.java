@@ -1,4 +1,4 @@
-﻿// src/main/java/trabalhofinal/exception/NegocioException.java
+// src/main/java/trabalhofinal/exception/NegocioException.java
 package trabalhofinal.exception;
 
 

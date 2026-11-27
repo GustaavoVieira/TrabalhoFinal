@@ -1,4 +1,4 @@
-﻿package trabalhofinal.exception;
+package trabalhofinal.exception;
 
 /**
  * Lançada quando uma reserva ou jogo conflita com outro já existente

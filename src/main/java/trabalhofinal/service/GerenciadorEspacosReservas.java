@@ -1,4 +1,4 @@
-﻿package trabalhofinal.service;
+package trabalhofinal.service;
 
 import trabalhofinal.exception.*;
 import trabalhofinal.model.*;
