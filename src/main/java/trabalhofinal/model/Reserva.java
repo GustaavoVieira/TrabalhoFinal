@@ -8,12 +8,6 @@ import trabalhofinal.util.*;
 
 import javax.swing.JOptionPane;
 
-/**
- * Representa uma reserva de espaço esportivo.
- * Suporta reserva por usuário e vinculação opcional a equipes.
- * Implementa controle de status (PENDENTE, APROVADA, REJEITADA).
- * Requisito 5 (Reserva de Espaços).
- */
 public class Reserva {
 
     public static final String STATUS_PENDENTE  = "PENDENTE";

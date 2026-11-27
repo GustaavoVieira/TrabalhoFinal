@@ -9,9 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- * Gerencia campeonatos, inscrições de equipes e tabela de jogos.
- */
 public class GerenciadorCampeonatos {
 
     public static void cadastrarCampeonato() {

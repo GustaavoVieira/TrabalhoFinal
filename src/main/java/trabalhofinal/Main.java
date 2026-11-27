@@ -4,10 +4,6 @@ import javax.swing.JOptionPane;
 import trabalhofinal.repository.RepositorioDados;
 import trabalhofinal.service.GerenciadorUsuarios;
 
-/**
- * Classe principal – ponto de entrada da aplicação.
- * Responsabilidade única: inicializar o sistema e exibir o menu inicial.
- */
 public class Main {
 
     public static void main(String[] args) {

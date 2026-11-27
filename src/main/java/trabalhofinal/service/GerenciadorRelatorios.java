@@ -11,9 +11,6 @@ import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
 
-/**
- * Gerencia relatórios, estatísticas, rankings e consultas de equipes.
- */
 public class GerenciadorRelatorios {
 
     public static boolean adicionarEquipe(Equipe equipe) {

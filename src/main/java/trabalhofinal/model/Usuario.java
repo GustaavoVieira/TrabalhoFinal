@@ -9,10 +9,6 @@ import trabalhofinal.util.*;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- * Classe abstrata base para todos os usuários do sistema.
- * Estende EntidadeBase (id, nome, ativo) e implementa Notificavel.
- */
 public abstract class Usuario extends EntidadeBase implements Notificavel {
 
     private String email;
@@ -24,13 +20,9 @@ public abstract class Usuario extends EntidadeBase implements Notificavel {
         setSenha(senha);
     }
 
-    // ── Autenticação ─────────────────────────────────────────────────────────
-
     public boolean verificarSenha(String senhaInformada) {
         return senha != null && senha.equals(senhaInformada);
     }
-
-    // ── Notificavel ──────────────────────────────────────────────────────────
 
     @Override
     public void receberNotificacao(String titulo, String mensagem) {
@@ -40,18 +32,13 @@ public abstract class Usuario extends EntidadeBase implements Notificavel {
                 JOptionPane.INFORMATION_MESSAGE);
     }
 
-    // ── Exibição ─────────────────────────────────────────────────────────────
-
     public void exibirDados() {
         JOptionPane.showMessageDialog(null,
                 "Nome: "   + getNome()
                 + "\nE-mail: " + email);
     }
 
-    /** Cada tipo de usuário tem seu próprio menu (polimorfismo). */
     public abstract void exibirMenu();
-
-    // ── Getters / Setters ─────────────────────────────────────────────────────
 
     public String getEmail() { return email; }
     public void setEmail(String email) {

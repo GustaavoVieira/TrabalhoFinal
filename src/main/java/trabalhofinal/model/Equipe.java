@@ -10,10 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- * Representa uma equipe esportiva vinculada a um técnico e modalidade.
- * Implementa Relatorio para geração de estatísticas.
- */
 public class Equipe extends EntidadeBase implements Relatorio {
 
     private String modalidade;
@@ -28,13 +24,6 @@ public class Equipe extends EntidadeBase implements Relatorio {
         setTecnico(tecnico);
     }
 
-    // ── Atletas ──────────────────────────────────────────────────────────────
-
-    /**
-     * Adiciona um atleta à equipe.
-     * Regra 1: atleta não pode estar em duas equipes da mesma modalidade (verificado no Main).
-     * Regra 7: atleta suspenso não pode ser adicionado/escalado.
-     */
     public boolean adicionarAtleta(Atleta atleta) {
         if (atleta == null) {
             throw new IllegalArgumentException("Atleta inválido.");
@@ -107,8 +96,6 @@ public class Equipe extends EntidadeBase implements Relatorio {
         return false;
     }
 
-    // ── Reforços e Histórico ──────────────────────────────────────────────────
-
     public boolean precisaReforcos() {
         return atletas.size() < limiteAtletas;
     }
@@ -127,8 +114,6 @@ public class Equipe extends EntidadeBase implements Relatorio {
         JOptionPane.showMessageDialog(null, sb.toString());
     }
 
-    // ── Relatório ────────────────────────────────────────────────────────────
-
     @Override
     public void gerarRelatorio() {
         listarAtletas();
@@ -140,8 +125,6 @@ public class Equipe extends EntidadeBase implements Relatorio {
         return getNome() + " [" + modalidade + "] – Elenco: " + atletas.size() + "/" + limiteAtletas
                 + " | Técnico: " + (tecnico != null ? tecnico.getNome() : "Nenhum");
     }
-
-    // ── Getters / Setters ─────────────────────────────────────────────────────
 
     public String getModalidade() { return modalidade; }
     public void setModalidade(String modalidade) {

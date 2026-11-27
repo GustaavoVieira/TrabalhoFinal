@@ -11,10 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- * Classe utilitária para entrada e seleção de dados via JOptionPane.
- * Responsabilidade única: interação de UI reutilizável (datas, horários, seleções).
- */
 public class InputHelper {
 
     private static final DateTimeFormatter FORMATO_DATA =

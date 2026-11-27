@@ -10,10 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
-/**
- * Representa um campeonato esportivo.
- * Implementa Relatorio para geração de classificação e estatísticas.
- */
 public class Campeonato extends EntidadeBase implements Relatorio {
 
     public static final String STATUS_ABERTO    = "ABERTO";
@@ -32,10 +28,8 @@ public class Campeonato extends EntidadeBase implements Relatorio {
         this.regulamento = "";
     }
 
-    // ── Equipes ──────────────────────────────────────────────────────────────
-
     public void adicionarEquipe(Equipe equipe) {
-        // Regra 6: campeonato encerrado
+
         if (STATUS_ENCERRADO.equals(status)) {
             throw new CampeonatoEncerradoException(
                     "O campeonato '" + getNome() + "' está encerrado e não aceita novas inscrições.");
@@ -54,15 +48,13 @@ public class Campeonato extends EntidadeBase implements Relatorio {
             }
         }
         equipes.add(equipe);
-        // Notifica todos os atletas da equipe
+
         Notificacao n = new Notificacao(
                 "Novo campeonato",
                 "Sua equipe '" + equipe.getNome() + "' foi inscrita no campeonato '" + getNome() + "'.",
                 equipe.getTecnico().getEmail());
         JOptionPane.showMessageDialog(null, "Equipe adicionada ao campeonato!");
     }
-
-    // ── Jogos ────────────────────────────────────────────────────────────────
 
     public void adicionarJogo(Jogo jogo) {
         if (STATUS_ENCERRADO.equals(status)) {
@@ -99,24 +91,16 @@ public class Campeonato extends EntidadeBase implements Relatorio {
         JOptionPane.showMessageDialog(null, "Jogo cadastrado com sucesso!");
     }
 
-    // ── Encerrar campeonato ───────────────────────────────────────────────────
-
     public void encerrar() {
         this.status = STATUS_ENCERRADO;
         JOptionPane.showMessageDialog(null, "Campeonato '" + getNome() + "' encerrado!");
     }
 
-    // ── Classificação ────────────────────────────────────────────────────────
-
-    /**
-     * Calcula e exibe a tabela de classificação do campeonato.
-     * Vitória = 3 pts | Empate = 1 pt | Derrota = 0 pts
-     */
     public void gerarClassificacao() {
         if (equipes.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Nenhuma equipe no campeonato!"); return;
         }
-        // Pontuação por equipe
+
         int[] pontos   = new int[equipes.size()];
         int[] vitorias = new int[equipes.size()];
         int[] empates  = new int[equipes.size()];
@@ -137,7 +121,6 @@ public class Campeonato extends EntidadeBase implements Relatorio {
             else              { pontos[i1]++; pontos[i2]++; empates[i1]++; empates[i2]++; }
         }
 
-        // Ordena por pontos (bubble sort simples)
         Integer[] ordem = new Integer[equipes.size()];
         for (int i = 0; i < ordem.length; i++) ordem[i] = i;
         for (int i = 0; i < ordem.length - 1; i++)
@@ -162,8 +145,6 @@ public class Campeonato extends EntidadeBase implements Relatorio {
         JOptionPane.showMessageDialog(null, sb.toString(), "Classificação",
                 JOptionPane.INFORMATION_MESSAGE);
     }
-
-    // ── Listagens ─────────────────────────────────────────────────────────────
 
     public void listarEquipes() {
         if (equipes.isEmpty()) {
@@ -197,8 +178,6 @@ public class Campeonato extends EntidadeBase implements Relatorio {
         }
         JOptionPane.showMessageDialog(null, lista.toString());
     }
-
-    // ── Resultados ───────────────────────────────────────────────────────────
 
     public void registrarResultadoJogo() {
         if (jogos.isEmpty()) {
@@ -243,8 +222,6 @@ public class Campeonato extends EntidadeBase implements Relatorio {
         JOptionPane.showMessageDialog(null, lista.toString());
     }
 
-    // ── Relatorio ────────────────────────────────────────────────────────────
-
     @Override
     public void gerarRelatorio() {
         gerarClassificacao();
@@ -255,8 +232,6 @@ public class Campeonato extends EntidadeBase implements Relatorio {
         return getNome() + " [" + modalidade + "] – " + status
                 + " | Equipes: " + equipes.size() + " | Jogos: " + jogos.size();
     }
-
-    // ── Getters / Setters ─────────────────────────────────────────────────────
 
     public String getModalidade() { return modalidade; }
     public void setModalidade(String modalidade) {

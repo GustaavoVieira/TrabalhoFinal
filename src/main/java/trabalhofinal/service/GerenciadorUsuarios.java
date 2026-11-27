@@ -8,9 +8,6 @@ import trabalhofinal.util.*;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- * Gerencia autenticação, cadastro e controle disciplinar de usuários, além de comunicados.
- */
 public class GerenciadorUsuarios {
 
     public static void login() {

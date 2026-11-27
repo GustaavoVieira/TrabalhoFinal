@@ -10,11 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- * Representa um espaço esportivo do sistema.
- * Herda de EntidadeBase (id, nome, ativo).
- * Implementa Relatorio para geração de estatísticas.
- */
 public class EspacoEsportivo extends EntidadeBase implements Relatorio {
 
     public static final String STATUS_ATIVO      = "ATIVO";
@@ -36,14 +31,9 @@ public class EspacoEsportivo extends EntidadeBase implements Relatorio {
         this.statusFuncionamento = STATUS_ATIVO;
     }
 
-    // ── Regras de negócio ────────────────────────────────────────────────────
-
-    /** Regra 5: espaços em manutenção não podem ser reservados. */
     public boolean estaEmManutencao() {
         return STATUS_MANUTENCAO.equalsIgnoreCase(statusFuncionamento);
     }
-
-    // ── Horários disponíveis ─────────────────────────────────────────────────
 
     public void adicionarHorario(String horario) {
         if (horario != null && !horario.trim().isEmpty()
@@ -59,8 +49,6 @@ public class EspacoEsportivo extends EntidadeBase implements Relatorio {
     public List<String> getHorariosDisponiveis() {
         return new ArrayList<>(horariosDisponiveis);
     }
-
-    // ── Edição ───────────────────────────────────────────────────────────────
 
     public void editar() {
         String novoNome = JOptionPane.showInputDialog(
@@ -86,8 +74,6 @@ public class EspacoEsportivo extends EntidadeBase implements Relatorio {
         JOptionPane.showMessageDialog(null, "Espaço atualizado com sucesso!");
     }
 
-    // ── Relatorio ────────────────────────────────────────────────────────────
-
     @Override
     public void gerarRelatorio() {
         exibirDados();
@@ -98,8 +84,6 @@ public class EspacoEsportivo extends EntidadeBase implements Relatorio {
         return getNome() + " [" + tipo + "] – " + statusFuncionamento
                 + " | Cap.: " + capacidade;
     }
-
-    // ── Exibição ─────────────────────────────────────────────────────────────
 
     public void exibirDados() {
         StringBuilder sb = new StringBuilder();
@@ -114,8 +98,6 @@ public class EspacoEsportivo extends EntidadeBase implements Relatorio {
         }
         JOptionPane.showMessageDialog(null, sb.toString());
     }
-
-    // ── Getters / Setters ────────────────────────────────────────────────────
 
     public String getTipo() { return tipo; }
     public void setTipo(String tipo) {

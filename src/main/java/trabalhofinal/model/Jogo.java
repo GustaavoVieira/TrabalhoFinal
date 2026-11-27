@@ -10,10 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- * Representa uma partida/jogo de um campeonato.
- * Implementa controle de escalação e regras de suspensão (Regra de Negócio 7).
- */
 public class Jogo {
 
     private Equipe equipe1;
@@ -54,12 +50,6 @@ public class Jogo {
         this.realizado = false;
     }
 
-    // ── Escalação (Regra de Negócio 7) ───────────────────────────────────────
-
-    /**
-     * Escala um atleta para a partida.
-     * Regra 7: Atletas suspensos não podem ser escalados.
-     */
     public void escalarAtleta(Equipe equipe, Atleta atleta) {
         if (equipe == null || atleta == null) {
             throw new IllegalArgumentException("Equipe e atleta são obrigatórios.");
@@ -106,8 +96,6 @@ public class Jogo {
         JOptionPane.showMessageDialog(null, sb.toString(), "Escalações", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    // ── Alteração de horário e local (Notificações) ──────────────────────────
-
     public void remarcar(String novaData, String novoHorario, EspacoEsportivo novoEspaco) {
         this.data = novaData.trim();
         this.horario = novoHorario.trim();
@@ -132,8 +120,6 @@ public class Jogo {
             a.receberNotificacao("Alteração de Horário de Jogo", aviso);
         }
     }
-
-    // ── Registro de Resultados ───────────────────────────────────────────────
 
     public void registrarResultado() {
         if (realizado) {
@@ -178,7 +164,6 @@ public class Jogo {
         placarEquipe2 = placar2;
         realizado = true;
 
-        // Atualiza histórico dos atletas participantes
         String descJogo = "Jogo: " + equipe1.getNome() + " " + placar1 + " x " + placar2 + " " + equipe2.getNome();
         for (Atleta a : escalacaoEquipe1) a.adicionarHistorico(descJogo);
         for (Atleta a : escalacaoEquipe2) a.adicionarHistorico(descJogo);
@@ -196,8 +181,6 @@ public class Jogo {
                         + "\nHorário: " + horario
                         + "\nResultado: " + resultado);
     }
-
-    // ── Getters / Setters ────────────────────────────────────────────────────
 
     public Equipe getEquipe1()              { return equipe1; }
     public Equipe getEquipe2()              { return equipe2; }

@@ -10,18 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- * Representa um atleta universitário.
- * Estende Usuario e implementa Notificavel e Relatorio.
- */
 public class Atleta extends Usuario implements Notificavel, Relatorio {
 
     private String matricula;
     private String curso;
     private String modalidade;
     private boolean suspenso = false;
-    private int nivelDesempenho = 7; // Escala 1 a 10
-    private String disponibilidadeHorario = "Noite"; // Manhã, Tarde, Noite
+    private int nivelDesempenho = 7;
+    private String disponibilidadeHorario = "Noite";
     private final List<String> historico = new ArrayList<>();
 
     public Atleta(String nome, String email, String senha,
@@ -31,8 +27,6 @@ public class Atleta extends Usuario implements Notificavel, Relatorio {
         this.curso      = curso;
         this.modalidade = modalidade;
     }
-
-    // ── Solicitação de equipe ────────────────────────────────────────────────
 
     public void solicitarEquipe(List<Equipe> equipes) {
         if (equipes == null || equipes.isEmpty()) {
@@ -76,8 +70,6 @@ public class Atleta extends Usuario implements Notificavel, Relatorio {
         }
     }
 
-    // ── Sistema Inteligente de Formação de Equipes (Extra) ───────────────────
-
     public void sugerirEquipesInteligente() {
         List<SistemaFormacaoEquipes.Sugestao> sugestoes =
                 SistemaFormacaoEquipes.sugerirEquipesParaAtleta(this, RepositorioDados.getEquipes());
@@ -109,8 +101,6 @@ public class Atleta extends Usuario implements Notificavel, Relatorio {
             }
         }
     }
-
-    // ── Jogos, Resultados e Estatísticas Pessoais ────────────────────────────
 
     public void consultarMeusJogosEResultados() {
         List<Campeonato> camps = RepositorioDados.getCampeonatos();
@@ -165,8 +155,6 @@ public class Atleta extends Usuario implements Notificavel, Relatorio {
         JOptionPane.showMessageDialog(null, stats, "Estatísticas Pessoais", JOptionPane.INFORMATION_MESSAGE);
     }
 
-    // ── Histórico ────────────────────────────────────────────────────────────
-
     public void adicionarHistorico(String evento) {
         if (evento != null && !evento.trim().isEmpty()) {
             historico.add(evento.trim());
@@ -184,8 +172,6 @@ public class Atleta extends Usuario implements Notificavel, Relatorio {
         }
         JOptionPane.showMessageDialog(null, sb.toString());
     }
-
-    // ── Notificações ─────────────────────────────────────────────────────────
 
     @Override
     public void receberNotificacao(String titulo, String mensagem) {
@@ -209,8 +195,6 @@ public class Atleta extends Usuario implements Notificavel, Relatorio {
         JOptionPane.showMessageDialog(null, sb.toString());
     }
 
-    // ── Relatório ────────────────────────────────────────────────────────────
-
     @Override
     public void gerarRelatorio() {
         exibirDados();
@@ -224,8 +208,6 @@ public class Atleta extends Usuario implements Notificavel, Relatorio {
                 + " (Desempenho: " + nivelDesempenho + "/10)";
     }
 
-    // ── Exibição ─────────────────────────────────────────────────────────────
-
     @Override
     public void exibirDados() {
         super.exibirDados();
@@ -237,8 +219,6 @@ public class Atleta extends Usuario implements Notificavel, Relatorio {
                         + "\nDisponibilidade: " + disponibilidadeHorario
                         + "\nStatus: " + (suspenso ? "SUSPENSO" : "Ativo"));
     }
-
-    // ── Menu do Atleta ───────────────────────────────────────────────────────
 
     @Override
     public void exibirMenu() {
@@ -327,8 +307,6 @@ public class Atleta extends Usuario implements Notificavel, Relatorio {
             }
         } while (opcao != 3 && opcao != -1);
     }
-
-    // ── Getters / Setters ─────────────────────────────────────────────────────
 
     public void setMatricula(String matricula) {
         if (matricula == null || matricula.trim().isEmpty()) {

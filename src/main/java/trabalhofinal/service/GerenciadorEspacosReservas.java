@@ -9,9 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 
-/**
- * Gerencia espaços esportivos, buscas/filtros, reservas e verificação de disponibilidade.
- */
 public class GerenciadorEspacosReservas {
 
     public static void cadastrarEspaco() {
@@ -125,8 +122,6 @@ public class GerenciadorEspacosReservas {
             JOptionPane.showMessageDialog(null, "Espaço removido com sucesso!");
         }
     }
-
-    // ── Reservas ──────────────────────────────────────────────────────────────
 
     public static void adicionarReserva(Reserva r) {
         if (r != null) RepositorioDados.getReservas().add(r);

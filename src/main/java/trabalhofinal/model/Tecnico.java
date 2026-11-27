@@ -10,9 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 
-/**
- * Técnico esportivo – gerencia equipes, convoca atletas, cadastra escalações e solicita reservas.
- */
 public class Tecnico extends Usuario {
 
     private final List<SolicitacaoEquipe> solicitacoes = new ArrayList<>();
@@ -21,8 +18,6 @@ public class Tecnico extends Usuario {
     public Tecnico(String nome, String email, String senha) {
         super(nome, email, senha);
     }
-
-    // ── Equipes ──────────────────────────────────────────────────────────────
 
     public void criarEquipe() {
         if (equipes.size() >= 50) {
@@ -55,8 +50,6 @@ public class Tecnico extends Usuario {
         }
         JOptionPane.showMessageDialog(null, lista.toString());
     }
-
-    // ── Solicitações de Atletas ──────────────────────────────────────────────
 
     @Override
     public void receberSolicitacao(SolicitacaoEquipe solicitacao) {
@@ -130,8 +123,6 @@ public class Tecnico extends Usuario {
         }
     }
 
-    // ── Convocação e Escalação (Requisitos Técnicos) ──────────────────────────
-
     public void convocarAtleta() {
         Equipe equipe = selecionarEquipe();
         if (equipe == null) return;
@@ -172,7 +163,6 @@ public class Tecnico extends Usuario {
             return;
         }
 
-        // Busca jogos futuros desta equipe
         List<Jogo> jogosDisponiveis = new ArrayList<>();
         for (Campeonato c : RepositorioDados.getCampeonatos()) {
             for (Jogo j : c.getJogos()) {
@@ -205,7 +195,6 @@ public class Tecnico extends Usuario {
         }
         if (jogoSelecionado == null) return;
 
-        // Seleciona atletas da equipe para escalar
         String[] opcoesAtletas = equipe.getAtletas().stream()
                 .map(a -> a.getNome() + " [" + a.getMatricula() + "]" + (a.isSuspenso() ? " ⚠ SUSPENSO" : ""))
                 .toArray(String[]::new);
@@ -218,7 +207,7 @@ public class Tecnico extends Usuario {
         for (Atleta a : equipe.getAtletas()) {
             if ((a.getNome() + " [" + a.getMatricula() + "]" + (a.isSuspenso() ? " ⚠ SUSPENSO" : "")).equals(escolhaAtleta)) {
                 try {
-                    // Regra 7: atirará exceção se atleta estiver suspenso!
+
                     jogoSelecionado.escalarAtleta(equipe, a);
                     JOptionPane.showMessageDialog(null,
                             "Atleta " + a.getNome() + " escalado com sucesso para a partida!");
@@ -230,8 +219,6 @@ public class Tecnico extends Usuario {
             }
         }
     }
-
-    // ── Reserva de Espaço para Equipe (Requisito 5) ───────────────────────────
 
     public void solicitarReservaParaEquipe() {
         Equipe equipe = selecionarEquipe();
@@ -256,8 +243,6 @@ public class Tecnico extends Usuario {
             JOptionPane.showMessageDialog(null, ex.getMessage(), "Erro na Reserva", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-    // ── Sugestão Inteligente de Reforços (Extra) ─────────────────────────────
 
     public void sugerirReforcosInteligente() {
         Equipe equipe = selecionarEquipe();
@@ -292,8 +277,6 @@ public class Tecnico extends Usuario {
         }
     }
 
-    // ── Estatísticas e Integrantes ───────────────────────────────────────────
-
     public void consultarIntegrantes() {
         Equipe equipe = selecionarEquipe();
         if (equipe != null) equipe.listarAtletas();
@@ -313,8 +296,6 @@ public class Tecnico extends Usuario {
         JOptionPane.showMessageDialog(null, equipe.resumo(), "Estatísticas da Equipe",
                 JOptionPane.INFORMATION_MESSAGE);
     }
-
-    // ── Menu do Técnico ──────────────────────────────────────────────────────
 
     @Override
     public void exibirMenu() {
@@ -407,8 +388,6 @@ public class Tecnico extends Usuario {
             }
         } while (opcao != 2 && opcao != -1);
     }
-
-    // ── Utilitários ──────────────────────────────────────────────────────────
 
     private Equipe selecionarEquipe() {
         if (equipes.isEmpty()) {

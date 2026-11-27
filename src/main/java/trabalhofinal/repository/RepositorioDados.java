@@ -5,10 +5,6 @@ import trabalhofinal.model.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Repositório central em memória.
- * Responsabilidade única: armazenar e fornecer acesso às coleções globais do sistema.
- */
 public class RepositorioDados {
 
     public static final int LIMITE_USUARIOS    = 100;
@@ -22,7 +18,6 @@ public class RepositorioDados {
     private static final List<EspacoEsportivo> espacos     = new ArrayList<>();
     private static final List<Reserva>         reservas    = new ArrayList<>();
 
-    // ── Usuários ──────────────────────────────────────────────────────────────
     public static List<Usuario> getUsuarios() { return usuarios; }
 
     public static boolean emailJaCadastrado(String email) {
@@ -45,7 +40,6 @@ public class RepositorioDados {
         return resultado;
     }
 
-    // ── Equipes ───────────────────────────────────────────────────────────────
     public static List<Equipe> getEquipes() { return equipes; }
 
     public static boolean equipeJaCadastrada(String nome, String modalidade) {
@@ -60,7 +54,6 @@ public class RepositorioDados {
         return false;
     }
 
-    // ── Campeonatos ───────────────────────────────────────────────────────────
     public static List<Campeonato> getCampeonatos() { return campeonatos; }
 
     public static boolean campeonatoJaCadastrado(String nome, String modalidade) {
@@ -68,13 +61,11 @@ public class RepositorioDados {
                 c.getNome().equalsIgnoreCase(nome) && c.getModalidade().equalsIgnoreCase(modalidade));
     }
 
-    // ── Espaços ───────────────────────────────────────────────────────────────
     public static List<EspacoEsportivo> getEspacos() { return espacos; }
 
     public static boolean espacoJaCadastrado(String nome) {
         return espacos.stream().anyMatch(e -> e.getNome().equalsIgnoreCase(nome));
     }
 
-    // ── Reservas ──────────────────────────────────────────────────────────────
     public static List<Reserva> getReservas() { return reservas; }
 }

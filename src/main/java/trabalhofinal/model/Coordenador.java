@@ -8,18 +8,11 @@ import trabalhofinal.util.*;
 
 import javax.swing.*;
 
-/**
- * Coordenador esportivo – administração geral do sistema.
- * Gerencia campeonatos, espaços esportivos, aprovação de reservas,
- * comunicados e relatórios estatísticos completos.
- */
 public class Coordenador extends Usuario {
 
     public Coordenador(String nome, String email, String senha) {
         super(nome, email, senha);
     }
-
-    // ── Menu principal ────────────────────────────────────────────────────────
 
     @Override
     public void exibirMenu() {
@@ -52,8 +45,6 @@ public class Coordenador extends Usuario {
             }
         } while (opcao != 7 && opcao != -1);
     }
-
-    // ── Sub-menus ─────────────────────────────────────────────────────────────
 
     public void menuUsuarios() {
         int opcao;
