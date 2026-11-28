@@ -248,7 +248,7 @@ public class GerenciadorEspacosReservas {
     public static boolean verificarDisponibilidade(EspacoEsportivo espaco, String data, String horario) {
         if (espaco.estaEmManutencao()) {
             throw new EspacoEmManutencaoException(
-                    "Regra 5 violada: O espaço '" + espaco.getNome()
+                    "O espaço '" + espaco.getNome()
                             + "' está em MANUTENÇÃO e não pode receber reservas ou jogos.");
         }
         for (Reserva r : RepositorioDados.getReservas()) {
@@ -257,7 +257,7 @@ public class GerenciadorEspacosReservas {
                     && r.getHorario().equals(horario)
                     && !Reserva.STATUS_REJEITADA.equalsIgnoreCase(r.getStatus())) {
                 throw new ReservaConflitoException(
-                        "Regra 2 violada: Conflito de horário! O espaço '" + espaco.getNome()
+                        "Conflito de horário! O espaço '" + espaco.getNome()
                                 + "' já possui uma reserva em " + data + " às " + horario);
             }
         }
@@ -268,7 +268,7 @@ public class GerenciadorEspacosReservas {
                         && j.getData().equals(data)
                         && j.getHorario().equals(horario)) {
                     throw new ReservaConflitoException(
-                            "Regra 2 violada: Conflito de horário! Já existe um jogo agendado neste espaço em "
+                            "Conflito de horário! Já existe um jogo agendado neste espaço em "
                                     + data + " às " + horario);
                 }
             }

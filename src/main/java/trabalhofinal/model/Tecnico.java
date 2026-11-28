@@ -95,7 +95,7 @@ public class Tecnico extends Usuario {
                 if (resposta == JOptionPane.YES_OPTION) {
                     if (RepositorioDados.atletaJaEmEquipeDaModalidade(atleta.getMatricula(), equipe.getModalidade())) {
                         JOptionPane.showMessageDialog(null,
-                                "Regra de negócio violada: O atleta já está em outra equipe da modalidade "
+                                "O atleta já está em outra equipe da modalidade "
                                         + equipe.getModalidade() + "!", "Acesso Negado",
                                 JOptionPane.ERROR_MESSAGE);
                         s.setSituacao("RECUSADA");

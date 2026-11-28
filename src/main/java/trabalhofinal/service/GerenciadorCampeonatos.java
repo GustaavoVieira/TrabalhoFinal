@@ -124,7 +124,7 @@ public class GerenciadorCampeonatos {
         if (campeonato == null) return;
         if (campeonato.getQtdEquipes() < 2) {
             JOptionPane.showMessageDialog(null,
-                    "Regra 4: O campeonato precisa ter ao menos duas equipes participantes para cadastrar um jogo!");
+                    "O campeonato precisa ter ao menos duas equipes participantes para cadastrar um jogo!");
             return;
         }
         Equipe equipe1 = InputHelper.selecionarEquipeJogo(campeonato, "Selecione a primeira equipe:");
